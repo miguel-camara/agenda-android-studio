@@ -8,7 +8,7 @@ Para poder accerder a la agenda es necesario iniciar sesion con una cuenta que e
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c6.png" alt="Login" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c6.PNG" alt="Login" width="200px">
     </p>
 </div>
 
@@ -22,7 +22,7 @@ En caso de que el correo exista mandara una alerta indicando que la cuenta ya ex
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c7.png" alt="Register" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c7.PNG" alt="Register" width="200px">
     </p>
 </div>
 
@@ -36,7 +36,7 @@ En caso de que no exista ninguna agenda se pueden crear una nueva con el **boton
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c1.png" alt="Agenda" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c1.PNG" alt="Agenda" width="200px">
     </p>
 </div>
 
@@ -50,7 +50,7 @@ Una vez que llenamos los campos podemos **guardar** o **cancelar** la actividad.
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c2.png" alt="Agregar Agenda" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c2.PNG" alt="Agregar Agenda" width="200px">
     </p>
 </div>
 
@@ -63,7 +63,7 @@ Al agregar una nueva agenda aparecera en la pantalla principal.
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c3.png" alt="Cambios de agenda" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c3.PNG" alt="Cambios de agenda" width="200px">
     </p>
 </div>
 
@@ -77,7 +77,7 @@ Podemos cambiar el valor de todos los campos o solo alguno en especifico y damos
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c4.png" alt="Editar Agenda" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c4.PNG" alt="Editar Agenda" width="200px">
     </p>
 </div>
 
@@ -89,7 +89,7 @@ En la pantalla principal apareceran todos las agendas y veremos que la que selec
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c5.png" alt="Agenda Editada" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c5.PNG" alt="Agenda Editada" width="200px">
     </p>
 </div>
 
@@ -101,7 +101,7 @@ Para eliminar una agenda dejemos presionado sobre el elemento que queramos elimi
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c8.png" alt="Eliminar Agenda" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c8.PNG" alt="Eliminar Agenda" width="200px">
     </p>
 </div>
 
@@ -113,6 +113,6 @@ Cuando eliminamos una agenda, esta desaparece de la pantalla principal.
 
 <div>
     <p style = 'text-align:center;'>
-        <img src="c9.png" alt="Agenda Eliminada" width="200px">
+        <img src="https://github.com/miguel-camara/agenda-android-studio/blob/main/c9.PNG" alt="Agenda Eliminada" width="200px">
     </p>
 </div>
