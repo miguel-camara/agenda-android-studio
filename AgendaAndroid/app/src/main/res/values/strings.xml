@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Agenda</string>
+    <string name="title_1">Nombre del Usuario</string>
+    <string name="title_2">Edad del Usuario</string>
+    <string name="name">Nombre</string>
+    <string name="age">Edad</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add_quote">Agregar Agenda</string>
+    <string name="edit_quote">Editar Agenda</string>
+    <string name="edit">Editar</string>
+    <string name="last_name">Apellido</string>
+    <string name="phone">Teléfono</string>
+    <string name="date">Fecha</string>
+    <string name="hour">Hora</string>
+    <string name="category">Categoria</string>
+    <string name="login">Inicar Sesión</string>
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
+    <string name="register">Registrarse</string>
+    <string name="field">¡Campo Requerido!</string>
+    <string name="invalid">Correo o Contraseña Incorrecto</string>
+</resources>

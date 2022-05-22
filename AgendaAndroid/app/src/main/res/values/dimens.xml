@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_top_tv">50dp</dimen>
+    <dimen name="margin_start_tv">16dp</dimen>
+    <dimen name="text_size_tv">26sp</dimen>
+    <dimen name="text_size2_tv">16sp</dimen>
+    <dimen name="margin_end_tv">16dp</dimen>
+<!--    <dimen name="width_tv">wrap_content</dimen>-->
+<!--    <dimen name="height_tv">wrap_content</dimen>-->
+    <dimen name="margin_top_et">30dp</dimen>
+    <dimen name="margin_start_et">30dp</dimen>
+    <dimen name="margin_end_et">30dp</dimen>
+    <dimen name="width_et">300dp</dimen>
+    <dimen name="height_et">50dp</dimen>
+    <dimen name="margin_top_btn">30dp</dimen>
+    <dimen name="margin_start_btn">16dp</dimen>
+    <dimen name="margin_end_btn">16dp</dimen>
+
+
+</resources>
