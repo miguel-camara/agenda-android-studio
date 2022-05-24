@@ -15,25 +15,27 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.app.agendaandroid.controller.UserController;
+import com.app.agendaandroid.controller.EventController;
 import com.app.agendaandroid.helper.DateHelper;
 import com.app.agendaandroid.helper.ValidationsHelper;
+import com.app.agendaandroid.model.Event;
 import com.app.agendaandroid.model.User;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-public class EditUserActivity extends AppCompatActivity  implements ValidationsHelper, DateHelper, View.OnClickListener {
+public class EditUserActivity extends AppCompatActivity  implements DateHelper, View.OnClickListener {
 
-    private EditText etEditName, etEditSurname, etEditPhone, etEditDate, etEditHour;
+    private EditText etEditDate, etEditHour;
     private Spinner spinnerEditCategory;
-
     private Button btnSaveChanges, btnCancelEdition;
-    private User user;
-    private UserController userController;
     private ImageButton ibEditDate, ibEditHour;
 
-    private User updateUser;
+    private Event event;
+    private Event updateEven;
+
+    private EventController eventController;
+
 
     final String[] data = new String[]{"Actividad Física", "Trabajo", "Compras",
             "Recreativo", "Otros"};
@@ -54,24 +56,19 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
 
         init();
 
-        userController = new UserController(this);
+        eventController = new EventController( this );
 
         long id = extras.getLong("id");
-        String updateName = extras.getString("name");
-        String surname = extras.getString("surname");
-        String phone = extras.getString("phone");
         String category = extras.getString("category");
         String date = extras.getString("date");
         String hour = extras.getString("hour");
+        int favorite = extras.getInt( "favorite" );
 
-        user = new User( id, updateName, surname, phone, category, date, hour );
+        event = new Event( id, category, date, hour );
 
-        etEditName.setText( user.getName() );
-        etEditSurname.setText( user.getSurname() );
-        etEditPhone.setText( user.getPhone() );
-        spinnerEditCategory.setSelection( getCategory( user.getCategory() ) );
-        etEditDate.setText( user.getDate() );
-        etEditHour.setText( user.getHour() );
+        spinnerEditCategory.setSelection( getCategory( event.getCategory() ) );
+        etEditDate.setText( event.getDate() );
+        etEditHour.setText( event.getHour() );
 
         ibEditDate.setOnClickListener( this );
         ibEditHour.setOnClickListener(this);
@@ -81,9 +78,6 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
     }
 
     private void init() {
-        etEditName = findViewById(R.id.etEditName);
-        etEditSurname = findViewById(R.id.etEditSurname);
-        etEditPhone = findViewById(R.id.etEditPhone);
         spinnerEditCategory = findViewById(R.id.spinnerEditCategory);
         etEditDate = findViewById(R.id.etEditDate);
         etEditHour = findViewById(R.id.etEditHour);
@@ -114,9 +108,7 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
     }
 
     private void editDate() {
-
-
-        int dates [] = parseDate( user.getDate() );
+        int dates [] = parseDate( event.getDate() );
 
         DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -135,7 +127,7 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
 
     private void editHour () {
 
-        int hours[] = parseHour( user.getHour() );
+        int hours[] = parseHour( event.getHour() );
 
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -144,7 +136,7 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, hours[0], hours[1], true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, hours[0] +  7, hours[1], true);
         timePickerDialog.setTitle( "Hora" );
         timePickerDialog.show();
     }
@@ -171,7 +163,7 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
     }
 
     private void saveChanges() {
-        long row = userController.updateQuote(updateUser);
+        long row = eventController.updateEvent(updateEven);
 
         if (row != 1) Toast.makeText(EditUserActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
         else {
@@ -183,85 +175,12 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
     private boolean validateForm () {
         boolean isEmpty = true;
 
-        etEditName.setError(null);
-        etEditSurname.setError(null);
-        etEditPhone.setError(null);
         etEditDate.setError(null);
         etEditHour.setError(null);
 
-        String updateName = etEditName.getText().toString();
-        String updateSurname = etEditSurname.getText().toString();
-        String updatePhone = etEditPhone.getText().toString();
         String updateCategory = spinnerEditCategory.getSelectedItem().toString();
         String updateDate = etEditDate.getText().toString();
         String updateHour = etEditHour.getText().toString();
-
-        // Update Name
-        updateName = updateName.trim();
-
-        // not is Empty
-        if (updateName.isEmpty()) {
-            etEditName.setError("¡Escribe un nombre!");
-            etEditName.requestFocus();
-            isEmpty = false;
-        } else if (!updateName.matches(NAME)) {
-            etEditName.setError("¡Nombre Incorrecto!");
-            etEditName.requestFocus();
-            isEmpty = false;
-        }
-
-        // convert Name
-        if (isEmpty) {
-            updateName = updateName.toLowerCase(Locale.ROOT);
-            updateName = Character.toUpperCase(updateName.charAt(0)) + updateName.substring(1);
-        }
-
-        // Update Surname
-        updateSurname = updateSurname.trim();
-
-        // not is Empty
-        if (updateSurname.isEmpty()) {
-            etEditSurname.setError("¡Escribe un apellido!");
-            etEditSurname.requestFocus();
-            isEmpty = false;
-        }
-
-        // not is Surname
-        if (!updateSurname.matches(NAME)) {
-            etEditSurname.setError("¡Apellido Incorrecto!");
-            etEditSurname.requestFocus();
-            isEmpty = false;
-        }
-
-        // convert Surname
-        if ( isEmpty ) {
-            updateSurname = updateSurname.toLowerCase( Locale.ROOT );
-            updateSurname = Character.toUpperCase( updateSurname.charAt( 0 ) ) + updateSurname.substring( 1 );
-        }
-
-        // Update Phone
-        updatePhone = updatePhone.trim();
-
-        // not is Empty
-        if ( updatePhone.isEmpty() ) {
-            etEditPhone.setError("¡Escribe un telefono!");
-            etEditPhone.requestFocus();
-            isEmpty = false;
-        }
-
-        // not is Number
-        if( !updatePhone.matches( NUMBER ) ) {
-            etEditPhone.setError("¡Telefono Incorrecto!");
-            etEditPhone.requestFocus();
-            isEmpty = false;
-        }
-
-        // wrong length
-        if ( updatePhone.length() != 10 ) {
-            etEditPhone.setError("¡Escribe 10 digitos!");
-            etEditPhone.requestFocus();
-            isEmpty = false;
-        }
 
         // Update Date
         updateDate = updateDate.trim();
@@ -283,7 +202,7 @@ public class EditUserActivity extends AppCompatActivity  implements ValidationsH
             isEmpty = false;
         }
 
-        updateUser = new User( user.getId(), updateName, updateSurname, updatePhone, updateCategory, updateDate, updateHour );
+        updateEven = new Event( event.getId(), updateCategory, updateDate, updateHour );
 
         return isEmpty;
     }

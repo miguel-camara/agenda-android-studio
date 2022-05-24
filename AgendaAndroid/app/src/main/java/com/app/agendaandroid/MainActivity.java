@@ -13,63 +13,52 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.app.agendaandroid.controller.RegisterController;
-import com.app.agendaandroid.controller.UserController;
-import com.app.agendaandroid.model.User;
+import com.app.agendaandroid.controller.EventController;
+import com.app.agendaandroid.model.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    private List<User> userList;
+    private List<Event> eventList;
     private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
-    private UserController userController;
+    private EventAdapter eventAdapter;
+    private EventController eventController;
     private FloatingActionButton fabAddQuote;
+    private long id;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-        userController = new UserController( MainActivity.this );
+        Bundle extras = getIntent().getExtras();
+
+        eventController = new EventController( MainActivity.this );
 
         recyclerView = findViewById( R.id.recyclerViewUser);
         fabAddQuote = findViewById( R.id.fabAddUser);
 
-        userList = new ArrayList<>();
+        eventList = new ArrayList<>();
 
-        userAdapter = new UserAdapter(userList);
+        eventAdapter = new EventAdapter( eventList, this, extras.getLong( "id" ) );
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager( getApplicationContext() );
         recyclerView.setLayoutManager( mLayoutManager );
         recyclerView.setItemAnimator( new DefaultItemAnimator() );
-        recyclerView.setAdapter(userAdapter);
+        recyclerView.setAdapter( eventAdapter );
 
-        refreshQuoteList();
+        refreshEventList();
 
         recyclerView.addOnItemTouchListener( new RecyclerTouchListener( getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
-            public void onClick(View view, int position ) {
-                User readUser = userList.get( position );
-
-                Intent intent = new Intent( MainActivity.this, EditUserActivity.class );
-                intent.putExtra("id", readUser.getId() );
-                intent.putExtra( "name", readUser.getName() );
-                intent.putExtra( "surname", readUser.getSurname() );
-                intent.putExtra( "phone", readUser.getPhone() );
-                intent.putExtra( "category", readUser.getCategory() );
-                intent.putExtra( "date", readUser.getDate() );
-                intent.putExtra( "hour", readUser.getHour() );
-                startActivity( intent );
-            }
+            public void onClick(View view, int position ) { }
 
             @Override
             public void onLongClick( View view, int position ) {
-                User deleteUser = userList.get( position );
+                Event deleteEvent = eventList.get( position );
 
                 AlertDialog dialog = new AlertDialog
                         .Builder( MainActivity.this )
@@ -77,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick( DialogInterface dialog, int which ) {
-                                userController.deleteQuote(deleteUser);
-                                refreshQuoteList();
+                                eventController.deleteQuote(deleteEvent);
+                                refreshEventList();
                             }
 
                         })
@@ -90,35 +79,31 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .setTitle( "Confirmar" )
-                        .setMessage( "¿Eliminar a " + deleteUser.getName() + "?")
+                        .setMessage( "¿Eliminar " + deleteEvent.getCategory() + "?")
                         .create();
                 dialog.show();
 
             }
         }));
 
-        fabAddQuote.setOnClickListener( new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
+        fabAddQuote.setOnClickListener( view ->  {
                 Intent intent = new Intent( MainActivity.this, AddUserActivity.class );
                 startActivity(intent);
-            }
         });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        refreshQuoteList();
+        refreshEventList();
     }
 
-    public void refreshQuoteList() {
-        if ( userAdapter == null ) return;
+    public void refreshEventList() {
+        if ( eventAdapter == null ) return;
 
-        userList = userController.readQuote();
+        eventList = eventController.readEvent();
 
-        userAdapter.setQuoteList(userList);
-        userAdapter.notifyDataSetChanged();
+        eventAdapter.setEventList(eventList);
+        eventAdapter.notifyDataSetChanged();
     }
 }

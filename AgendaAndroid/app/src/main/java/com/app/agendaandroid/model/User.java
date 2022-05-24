@@ -5,41 +5,29 @@ import retrofit2.http.Field;
 public class User {
     private long id;
     private String name;
-    private String surname;
     private String phone;
-    private String category;
-    private String date;
-    private String hour;
-    private String other;
+    private String email;
+    private String password;
 
     // Create User
-    public User(String name, String surname, String phone, String category, String date, String hour ) {
+
+
+    public User(String name, String phone, String email, String password) {
         this.name = name;
-        this.surname = surname;
         this.phone = phone;
-        this.category = category;
-        this.date = date;
-        this.hour = hour;
-    }
-    public User(String name, String surname, String phone, String category, String date, String hour, String other ) {
-        this.name = name;
-        this.surname = surname;
-        this.phone = phone;
-        this.category = category;
-        this.date = date;
-        this.hour = hour;
-        this.other = other;
+        this.email = email;
+        this.password = password;
     }
 
     // Read User
-    public User(long id, String name, String surname, String phone, String category, String date, String hour ) {
+
+
+    public User(long id, String name, String phone, String email, String password) {
         this.id = id;
         this.name = name;
-        this.surname = surname;
         this.phone = phone;
-        this.category = category;
-        this.date = date;
-        this.hour = hour;
+        this.email = email;
+        this.password = password;
     }
 
     public long getId() { return id; }
@@ -50,27 +38,15 @@ public class User {
 
     public void setName(String name) { this.name = name; }
 
-    public String getSurname() { return surname; }
-
-    public void setSurname(String surname) { this.surname = surname; }
-
     public String getPhone() { return phone; }
 
     public void setPhone(String phone) { this.phone = phone; }
 
-    public String getCategory() { return category; }
+    public String getEmail() { return email; }
 
-    public void setCategory(String category) { this.category = category; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getDate() { return date; }
+    public String getPassword() { return password; }
 
-    public void setDate(String date) { this.date = date; }
-
-    public String getHour() { return hour; }
-
-    public void setHour(String hour) { this.hour = hour; }
-
-    public String getOther() { return other; }
-
-    public void setOther(String other) { this.other = other; }
+    public void setPassword(String password) { this.password = password; }
 }

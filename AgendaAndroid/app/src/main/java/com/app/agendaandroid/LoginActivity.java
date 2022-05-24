@@ -4,15 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.agendaandroid.controller.RegisterController;
-import com.app.agendaandroid.model.Regiter;
+import com.app.agendaandroid.controller.UserController;
+import com.app.agendaandroid.model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,15 +21,16 @@ public class LoginActivity extends AppCompatActivity {
     EditText etLoginEmail;
     EditText etLoginPassword;
 
-    RegisterController registerController;
-    Regiter regiter;
+    UserController userController;
+    User user;
+    long id;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
 
-        registerController = new RegisterController( this );
+        userController = new UserController( this );
 
         btnLogin = findViewById( R.id.btnLogin );
         tvRegister = findViewById( R.id.tvRegister );
@@ -38,7 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener( view -> {
             if ( validateForm() ) {
-                if ( registerController.login( regiter ) ) goToMain();
+                 id = userController.login( user );
+                 if (id != -1) goToMain();
                 else Toast.makeText(this, "¡Correo o Contraseña Incorrecta!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -52,7 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMain(){
         Intent intent = new Intent(LoginActivity.this, MainActivity.class );
+        intent.putExtra("id", id );
         startActivity( intent );
+        Log.i(null, "ID: " + id);
+
         finish();
     }
 
@@ -84,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             isEmpty = false;
         }
 
-        regiter = new Regiter( "", email, password, "" );
+        user = new User( "", "", email, password );
 
         return isEmpty;
     }

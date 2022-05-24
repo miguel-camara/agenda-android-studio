@@ -9,9 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.app.agendaandroid.controller.RegisterController;
+import com.app.agendaandroid.controller.UserController;
 import com.app.agendaandroid.helper.ValidationsHelper;
-import com.app.agendaandroid.model.Regiter;
+import com.app.agendaandroid.model.User;
 
 import java.util.Locale;
 
@@ -22,15 +22,16 @@ public class RegisterActivity extends AppCompatActivity  implements ValidationsH
     EditText etRegisterPhone;
     EditText etRegisterEmail;
     EditText etRegisterPassword;
-    RegisterController registerController;
-    Regiter regiter;
+
+    UserController userController;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        registerController = new RegisterController( this );
+        userController = new UserController( this );
 
         etRegisterEmail = findViewById( R.id.etRegisterEmail );
         etRegisterPassword = findViewById( R.id.etRegisterPassword );
@@ -40,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity  implements ValidationsH
 
         btnRegister.setOnClickListener( view -> {
             if ( validateForm() ) {
-                if (registerController.existRegister( regiter ) ) {
+                if ( userController.userExists( user ) ) {
                     Toast.makeText(this, "¡El Usuario ya Existe!", Toast.LENGTH_SHORT).show();
                     goToLogin();
                 } else save();
@@ -49,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity  implements ValidationsH
     }
 
     private void save() {
-        long id = registerController.createRegister( regiter );
+        long id = userController.createUser( user );
 
         if (id == -1) Toast.makeText(  this, "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT ).show();
         else {
@@ -134,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity  implements ValidationsH
             isEmpty = false;
         }
 
-        regiter = new Regiter( name, email, password, phone );
+        user = new User( name, phone, email, password );
 
         return isEmpty;
     }

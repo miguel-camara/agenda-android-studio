@@ -14,7 +14,8 @@ public class SQLite_OpenHelper extends android.database.sqlite.SQLiteOpenHelper 
     @Override
     public void onCreate( SQLiteDatabase db ) {
         db.execSQL( Util.CREATE_TABLE_USER );
-        db.execSQL( Util.CREATE_TABLE_REGISTER );
+        db.execSQL( Util.CREATE_TABLE_FAVORITE );
+        db.execSQL( Util.CREATE_TABLE_EVENT );
     }
 
     @Override

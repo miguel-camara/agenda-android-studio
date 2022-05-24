@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.app.agendaandroid.helper.SQLite_OpenHelper;
 import com.app.agendaandroid.model.User;
@@ -24,21 +25,52 @@ public class UserController {
         dbHlpr = new SQLite_OpenHelper( context );
     }
 
-    public long createQuote( User user) {
+    public long login( User  user ) {
+
+        String [] args = { user.getEmail(), user.getPassword() };
+        String [] columns = { "id", "email", "password" };
+        db = dbHlpr.getReadableDatabase();
+        Cursor cursor = db.query( Util.TABLE_USER, columns, "email LIKE ? AND password LIKE ?", args, null, null, null);
+
+        long id = -1;
+
+        if ( cursor.moveToFirst() ) {
+            User nUser = new User( cursor.getLong(0), null, null, cursor.getString(1), cursor.getString(2) );
+            id = nUser.getId();
+        }
+
+        cursor.close();
+
+        return id;
+    }
+
+    public boolean userExists( User user ) {
+        boolean exists;
+        String []columns = { "email" };
+        String [] args = { user.getEmail() };
+
+        db = dbHlpr.getReadableDatabase();
+        Cursor cursor = db.query( Util.TABLE_USER, columns, "email LIKE ?", args, null, null, null);
+        exists = cursor.moveToFirst();
+        cursor.close();
+
+        return exists;
+    }
+
+
+    public long createUser( User user) {
         db = dbHlpr.getWritableDatabase();
 
         values = new ContentValues();
         values.put( "name", user.getName() );
-        values.put( "surname", user.getSurname() );
         values.put( "phone", user.getPhone() );
-        values.put( "category", user.getCategory() );
-        values.put( "date", user.getDate() );
-        values.put( "hour", user.getHour() );
+        values.put( "email", user.getEmail() );
+        values.put( "password", user.getPassword() );
 
         return db.insert( Util.TABLE_USER, null, values);
     }
 
-    public List<User> readQuote() {
+    public List<User> readUser() {
         userList = new ArrayList<>();
 
         db = dbHlpr.getReadableDatabase();
@@ -47,8 +79,8 @@ public class UserController {
 
         if ( cursor.moveToFirst() ) {
             do {
-                User user = new User( cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6) );
-                userList.add(user);
+                User user = new User( cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4) );
+                userList.add( user );
             } while (cursor.moveToNext());
         }
 
@@ -57,24 +89,22 @@ public class UserController {
         return userList;
     }
 
-    public long updateQuote( User user) {
+    public long updateUser( User user) {
         db = dbHlpr.getWritableDatabase();
 
         values = new ContentValues();
 
         values.put( "name", user.getName() );
-        values.put( "surname", user.getSurname() );
         values.put( "phone", user.getPhone() );
-        values.put( "category", user.getCategory() );
-        values.put( "date", user.getDate() );
-        values.put( "hour", user.getHour());
+        values.put( "email", user.getEmail() );
+        values.put( "password", user.getPassword() );
 
         String[] args = { String.valueOf( user.getId() ) };
 
         return db.update( Util.TABLE_USER, values, "id=?", args );
     }
 
-    public long deleteQuote( User user) {
+    public long deleteUser( User user ) {
         db = dbHlpr.getWritableDatabase();
 
         String[] args = { String.valueOf( user.getId() ) };

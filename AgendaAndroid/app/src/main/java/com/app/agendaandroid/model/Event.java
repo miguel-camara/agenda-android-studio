@@ -2,24 +2,21 @@ package com.app.agendaandroid.model;
 
 public class Event {
     private long id;
-    private String name;
-    private String email;
-    private String password;
-    private String phone;
+    private String category;
+    private String date;
+    private String hour;
 
-    public Event(long id, String name, String email, String password, String phone) {
+    public Event(String category, String date, String hour) {
+        this.category = category;
+        this.date = date;
+        this.hour = hour;
+     }
+
+    public Event(long id, String category, String date, String hour) {
         this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-    }
-
-    public Event(String name, String email, String password, String phone) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
+        this.category = category;
+        this.date = date;
+        this.hour = hour;
     }
 
     public long getId() {
@@ -30,35 +27,27 @@ public class Event {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategory() {
+        return category;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDate() {
+        return date;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHour() {
+        return hour;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 }

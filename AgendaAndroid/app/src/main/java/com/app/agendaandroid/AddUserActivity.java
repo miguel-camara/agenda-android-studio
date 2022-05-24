@@ -15,22 +15,24 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.app.agendaandroid.controller.EventController;
 import com.app.agendaandroid.controller.UserController;
 import com.app.agendaandroid.helper.DateHelper;
 import com.app.agendaandroid.helper.ValidationsHelper;
+import com.app.agendaandroid.model.Event;
 import com.app.agendaandroid.model.User;
 
 import java.util.Locale;
 
-public class AddUserActivity extends AppCompatActivity implements ValidationsHelper, DateHelper, View.OnClickListener {
+public class AddUserActivity extends AppCompatActivity implements DateHelper, View.OnClickListener {
     private Button btnAddQuote, btnCancel;
-
-    private EditText etName, etSurname, etPhone, etDate, etHour;
-    private UserController userController;
     private Spinner spinnerCategory;
+    private EditText etDate, etHour;
     private ImageButton ibDate, ibHour;
 
-    private User createUser;
+    private EventController eventController;
+
+    private Event createEvent;
 
     final String[] data = new String[]{"Actividad Física", "Trabajo", "Compras",
             "Recreativo", "Otros"};
@@ -49,13 +51,10 @@ public class AddUserActivity extends AppCompatActivity implements ValidationsHel
         btnAddQuote.setOnClickListener( this );
         btnCancel.setOnClickListener( this );
 
-        userController = new UserController( this );
+        eventController = new EventController( this );
     }
 
     private void init() {
-        etName = findViewById( R.id.etName );
-        etSurname = findViewById( R.id.etSurname );
-        etPhone = findViewById( R.id.etPhone );
         spinnerCategory = findViewById( R.id.spinnerCategory );
         etDate = findViewById( R.id.etDate );
         etHour = findViewById( R.id.etHour );
@@ -95,7 +94,7 @@ public class AddUserActivity extends AppCompatActivity implements ValidationsHel
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, HOUR, MINUTE, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, HOUR + 7, MINUTE, true);
         timePickerDialog.setTitle( "Hora" );
         timePickerDialog.show();
     }
@@ -106,7 +105,7 @@ public class AddUserActivity extends AppCompatActivity implements ValidationsHel
 
     private void addQuote() {
 
-        long id = userController.createQuote(createUser);
+        long id = eventController.createEvent( createEvent );
 
         if (id == -1) Toast.makeText(  this, "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT ).show();
         else {
@@ -118,76 +117,12 @@ public class AddUserActivity extends AppCompatActivity implements ValidationsHel
     private boolean validateForm () {
         boolean isEmpty = true;
 
-        etName.setError( null );
-        etSurname.setError( null );
-        etPhone.setError( null );
         etDate.setError( null );
         etHour.setError( null );
 
-        String name = etName.getText().toString();
-        String surname = etSurname.getText().toString();
-        String phone = etPhone.getText().toString();
         String category = spinnerCategory.getSelectedItem().toString();
         String date = etDate.getText().toString();
         String hour = etHour.getText().toString();
-
-        // Update Name
-        name = name.trim();
-
-        // not is Empty
-        if ( name.isEmpty() ) {
-            etName.setError("¡Escribe un nombre!");
-            etName.requestFocus();
-            isEmpty = false;
-        } else if( !name.matches( NAME ) ) {
-            etName.setError("¡Nombre Incorrecto!");
-            etName.requestFocus();
-            isEmpty = false;
-        }
-
-        // convert Name
-        if ( isEmpty ) {
-            name = name.toLowerCase( Locale.ROOT );
-            name = Character.toUpperCase( name.charAt( 0 ) ) + name.substring( 1 );
-        }
-
-        // Update Surname
-        surname = surname.trim();
-
-        // not is Empty
-        if ( surname.isEmpty() ) {
-            etSurname.setError("¡Escribe un apellido!");
-            etSurname.requestFocus();
-            isEmpty = false;
-        } else if( !surname.matches( NAME ) ) {
-            etSurname.setError("¡Apellido Incorrecto!");
-            etSurname.requestFocus();
-            isEmpty = false;
-        }
-
-        // convert Surname
-        if ( isEmpty ) {
-            surname = surname.toLowerCase( Locale.ROOT );
-            surname = Character.toUpperCase( surname.charAt( 0 ) ) + surname.substring( 1 );
-        }
-
-        // Update Phone
-        phone = phone.trim();
-
-        // not is Empty
-        if ( phone.isEmpty() ) {
-            etPhone.setError("¡Escribe un telefono!");
-            etPhone.requestFocus();
-            isEmpty = false;
-        } else if( !phone.matches( NUMBER ) ) {
-            etPhone.setError("¡Telefono Incorrecto!");
-            etPhone.requestFocus();
-            isEmpty = false;
-        } else  if ( phone.length() != 10 ) {
-            etPhone.setError("¡Escribe 10 digitos!");
-            etPhone.requestFocus();
-            isEmpty = false;
-        }
 
         // Update Date
         date = date.trim();
@@ -209,7 +144,7 @@ public class AddUserActivity extends AppCompatActivity implements ValidationsHel
             isEmpty = false;
         }
 
-        createUser = new User( name, surname, phone, category, date, hour );
+        createEvent = new Event( category, date, hour );
 
         return isEmpty;
     }

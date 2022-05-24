@@ -3,8 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/drawable/ic_add_white_24dp.xml" value="0.1" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/drawable/ic_baseline_directions_bike.xml" value="0.1" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/drawable/ic_baseline_directions_run.xml" value="0.1635" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.244" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/drawable/ic_baseline_event.xml" value="0.1635" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/drawable/ic_baseline_shopping_cart.xml" value="0.1" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/drawable/ic_baseline_work.xml" value="0.1" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/layout/activity_add_user.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/layout/activity_edit_user.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/layout/activity_login.xml" value="0.27291666666666664" />
-        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/layout/user_row.xml" value="0.47050359712230216" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/layout/activity_register.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Miguel/AndroidStudioProjects/AgendaAndroid/app/src/main/res/layout/user_row.xml" value="0.25" />
       </map>
     </option>
   </component>
