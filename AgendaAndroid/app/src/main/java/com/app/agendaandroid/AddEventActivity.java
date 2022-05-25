@@ -16,15 +16,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.app.agendaandroid.controller.EventController;
-import com.app.agendaandroid.controller.UserController;
 import com.app.agendaandroid.helper.DateHelper;
-import com.app.agendaandroid.helper.ValidationsHelper;
 import com.app.agendaandroid.model.Event;
-import com.app.agendaandroid.model.User;
 
 import java.util.Locale;
 
-public class AddUserActivity extends AppCompatActivity implements DateHelper, View.OnClickListener {
+public class AddEventActivity extends AppCompatActivity implements DateHelper, View.OnClickListener {
     private Button btnAddQuote, btnCancel;
     private Spinner spinnerCategory;
     private EditText etDate, etHour;
@@ -42,7 +39,7 @@ public class AddUserActivity extends AppCompatActivity implements DateHelper, Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_user);
+        setContentView(R.layout.activity_add_event);
 
         init();
 
@@ -81,7 +78,6 @@ public class AddUserActivity extends AppCompatActivity implements DateHelper, Vi
         };
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, onDateSetListener, YEAR, MONTH - 1, DAY);
-        datePickerDialog.setTitle( "Fecha" );
         datePickerDialog.show();
     }
 
@@ -94,8 +90,7 @@ public class AddUserActivity extends AppCompatActivity implements DateHelper, Vi
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, HOUR + 7, MINUTE, true);
-        timePickerDialog.setTitle( "Hora" );
+        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, HOUR, MINUTE, true);
         timePickerDialog.show();
     }
 

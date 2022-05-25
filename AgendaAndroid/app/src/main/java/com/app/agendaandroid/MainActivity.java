@@ -10,14 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.app.agendaandroid.controller.EventController;
 import com.app.agendaandroid.controller.FavoriteController;
 import com.app.agendaandroid.model.Event;
-import com.app.agendaandroid.model.Favorite;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
     private EventController eventController;
-    private FloatingActionButton fabAddQuote;
+    private ExtendedFloatingActionButton efabAddQuote;
     FavoriteController favoriteController;
     private long id;
 
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         favoriteController = new FavoriteController( MainActivity.this );
 
         recyclerView = findViewById( R.id.recyclerViewUser );
-        fabAddQuote = findViewById( R.id.fabAddUser );
+        efabAddQuote = findViewById( R.id.fabAddUser );
 
         eventList = new ArrayList<>();
 
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                                     favoriteController.deleteFavorite( favorite );
                                 } );
 
-                                eventController.deleteQuote(deleteEvent);
+                                eventController.deleteEvent(deleteEvent);
 
                                 refreshEventList();
                             }
@@ -91,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-        fabAddQuote.setOnClickListener( view ->  {
-                Intent intent = new Intent( MainActivity.this, AddUserActivity.class );
+        efabAddQuote.setOnClickListener(view ->  {
+                Intent intent = new Intent( MainActivity.this, AddEventActivity.class );
                 startActivity(intent);
         });
     }

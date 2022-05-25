@@ -38,7 +38,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View quoteRow = LayoutInflater.from( viewGroup.getContext() ).inflate( R.layout.user_row, viewGroup, false );
+        View quoteRow = LayoutInflater.from( viewGroup.getContext() ).inflate( R.layout.event, viewGroup, false );
         return new MyViewHolder( quoteRow );
     }
 
@@ -89,7 +89,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         myViewHolder.ivEdit.setOnClickListener( view ->  {
             Event editEvent = eventList.get(i);
 
-            Intent intent = new Intent( context, EditUserActivity.class );
+            Intent intent = new Intent( context, EditEventActivity.class );
             intent.putExtra("id", editEvent.getId() );
             intent.putExtra( "category", editEvent.getCategory() );
             intent.putExtra( "date", editEvent.getDate() );

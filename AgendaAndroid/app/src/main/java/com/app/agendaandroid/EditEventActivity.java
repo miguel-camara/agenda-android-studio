@@ -17,14 +17,12 @@ import android.widget.Toast;
 
 import com.app.agendaandroid.controller.EventController;
 import com.app.agendaandroid.helper.DateHelper;
-import com.app.agendaandroid.helper.ValidationsHelper;
 import com.app.agendaandroid.model.Event;
-import com.app.agendaandroid.model.User;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-public class EditUserActivity extends AppCompatActivity  implements DateHelper, View.OnClickListener {
+public class EditEventActivity extends AppCompatActivity  implements DateHelper, View.OnClickListener {
 
     private EditText etEditDate, etEditHour;
     private Spinner spinnerEditCategory;
@@ -45,7 +43,7 @@ public class EditUserActivity extends AppCompatActivity  implements DateHelper, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_user);
+        setContentView(R.layout.activity_edit_event);
 
         Bundle extras = getIntent().getExtras();
 
@@ -119,8 +117,7 @@ public class EditUserActivity extends AppCompatActivity  implements DateHelper, 
             }
         };
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(EditUserActivity.this, onDateSetListener, dates[2], dates[1] - 1, dates[0]);
-        datePickerDialog.setTitle( "Fecha" );
+        DatePickerDialog datePickerDialog = new DatePickerDialog(EditEventActivity.this, onDateSetListener, dates[2], dates[1] - 1, dates[0]);
         datePickerDialog.show();
     }
 
@@ -136,8 +133,7 @@ public class EditUserActivity extends AppCompatActivity  implements DateHelper, 
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, hours[0] +  7, hours[1], true);
-        timePickerDialog.setTitle( "Hora" );
+        TimePickerDialog timePickerDialog = new TimePickerDialog( this, onTimeSetListener, hours[0], hours[1], true);
         timePickerDialog.show();
     }
 
@@ -165,7 +161,7 @@ public class EditUserActivity extends AppCompatActivity  implements DateHelper, 
     private void saveChanges() {
         long row = eventController.updateEvent(updateEven);
 
-        if (row != 1) Toast.makeText(EditUserActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
+        if (row != 1) Toast.makeText(EditEventActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
         else {
             Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show();
             finish();

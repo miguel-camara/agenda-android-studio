@@ -69,7 +69,7 @@ public class EventController {
         return db.update( Util.TABLE_EVENT, values, "id=?", args );
     }
 
-    public long deleteQuote( Event event) {
+    public long deleteEvent( Event event ) {
         db = dbHlpr.getWritableDatabase();
 
         String[] args = { String.valueOf( event.getId() ) };

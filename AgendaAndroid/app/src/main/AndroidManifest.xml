@@ -23,10 +23,10 @@
             android:name="com.app.agendaandroid.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.app.agendaandroid.EditUserActivity"
+            android:name="com.app.agendaandroid.EditEventActivity"
             android:exported="false" />
         <activity
-            android:name="com.app.agendaandroid.AddUserActivity"
+            android:name="com.app.agendaandroid.AddEventActivity"
             android:exported="false" />
 
         <activity
