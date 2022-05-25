@@ -2,7 +2,6 @@ package com.app.agendaandroid;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.agendaandroid.controller.EventController;
 import com.app.agendaandroid.controller.FavoriteController;
-import com.app.agendaandroid.controller.UserController;
 import com.app.agendaandroid.model.Event;
 import com.app.agendaandroid.model.Favorite;
 
@@ -23,20 +20,15 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
 
     private List<Event> eventList;
-    private List<Favorite> favoriteList;
-    private Context context;
-    private EventController eventController;
-    private UserController userController;
-    private FavoriteController favoriteController;
-    private Long id;
+    private final Context context;
+    private final FavoriteController favoriteController;
+    private final Long id_user;
 
-    public EventAdapter(List<Event> eventList, Context context, Long id) {
+    public EventAdapter(List<Event> eventList, Context context, Long id_user) {
         this.eventList = eventList;
         this.context = context;
-        eventController = new EventController( context );
-        userController = new UserController( context );
         favoriteController = new FavoriteController( context );
-        this.id = id;
+        this.id_user = id_user;
     }
 
     public void setEventList( List<Event> eventList) {
@@ -80,28 +72,28 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         myViewHolder.hour.setText( hour );
         myViewHolder.ivIcon.setImageResource( setImage( category ) );
 
-        myViewHolder.ivFavorite.setImageResource( favoriteController.isFavorite( new Favorite( id, event.getId() ) ) ? R.drawable.ic_baseline_favorite :  R.drawable.ic_baseline_favorite_border );
+        myViewHolder.ivFavorite.setImageResource( favoriteController.isFavorite( new Favorite(id_user, event.getId() ) ) ? R.drawable.ic_baseline_favorite :  R.drawable.ic_baseline_favorite_border );
 
         myViewHolder.ivFavorite.setOnClickListener( view ->  {
 
-            if ( favoriteController.isFavorite( new Favorite( id, event.getId() ) )) {
+            if ( favoriteController.isFavorite( new Favorite(id_user, event.getId() ) )) {
                 myViewHolder.ivFavorite.setImageResource( R.drawable.ic_baseline_favorite_border );
-                favoriteController.deleteFavorite( new Favorite( id, event.getId() ) );
+                favoriteController.deleteFavorite(  favoriteController.getFavorite( new Favorite(id_user, event.getId() ) ) );
             } else {
                 myViewHolder.ivFavorite.setImageResource( R.drawable.ic_baseline_favorite );
-                favoriteController.createFavorite( new Favorite( id, event.getId() ) );
+                favoriteController.createFavorite( new Favorite(id_user, event.getId() ) );
             }
 
         } );
 
         myViewHolder.ivEdit.setOnClickListener( view ->  {
-            Event deleteEvent = eventList.get(i);
+            Event editEvent = eventList.get(i);
 
             Intent intent = new Intent( context, EditUserActivity.class );
-            intent.putExtra("id", deleteEvent.getId() );
-            intent.putExtra( "category", deleteEvent.getCategory() );
-            intent.putExtra( "date", deleteEvent.getDate() );
-            intent.putExtra( "hour", deleteEvent.getHour() );
+            intent.putExtra("id", editEvent.getId() );
+            intent.putExtra( "category", editEvent.getCategory() );
+            intent.putExtra( "date", editEvent.getDate() );
+            intent.putExtra( "hour", editEvent.getHour() );
 
             context.startActivity( intent );
         } );
@@ -116,7 +108,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView category, date, hour;
         ImageView ivFavorite, ivIcon, ivEdit;
-
 
         MyViewHolder( View itemView ) {
             super(itemView);

@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.app.agendaandroid.controller.EventController;
+import com.app.agendaandroid.controller.FavoriteController;
 import com.app.agendaandroid.model.Event;
+import com.app.agendaandroid.model.Favorite;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EventAdapter eventAdapter;
     private EventController eventController;
     private FloatingActionButton fabAddQuote;
+    FavoriteController favoriteController;
     private long id;
 
     @Override
@@ -37,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         eventController = new EventController( MainActivity.this );
+        favoriteController = new FavoriteController( MainActivity.this );
 
-        recyclerView = findViewById( R.id.recyclerViewUser);
-        fabAddQuote = findViewById( R.id.fabAddUser);
+        recyclerView = findViewById( R.id.recyclerViewUser );
+        fabAddQuote = findViewById( R.id.fabAddUser );
 
         eventList = new ArrayList<>();
 
@@ -63,16 +67,18 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog dialog = new AlertDialog
                         .Builder( MainActivity.this )
                         .setPositiveButton( "Sí, eliminar", new DialogInterface.OnClickListener() {
-
                             @Override
                             public void onClick( DialogInterface dialog, int which ) {
+                                favoriteController.readFavorite( deleteEvent.getId() ).forEach( favorite -> {
+                                    favoriteController.deleteFavorite( favorite );
+                                } );
+
                                 eventController.deleteQuote(deleteEvent);
+
                                 refreshEventList();
                             }
-
                         })
                         .setNegativeButton( "Cancelar", new DialogInterface.OnClickListener() {
-
                             @Override
                             public void onClick( DialogInterface dialog, int which ) {
                                 dialog.dismiss();
@@ -82,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage( "¿Eliminar " + deleteEvent.getCategory() + "?")
                         .create();
                 dialog.show();
-
             }
         }));
 

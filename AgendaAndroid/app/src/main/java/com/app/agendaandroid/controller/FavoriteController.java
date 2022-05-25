@@ -74,12 +74,14 @@ public class FavoriteController {
         return db.insert( Util.TABLE_FAVORITE, null, values);
     }
 
-    public List<Favorite> readFavorite() {
+    public List<Favorite> readFavorite( long id_event ) {
         favoriteList = new ArrayList<>();
 
         db = dbHlpr.getReadableDatabase();
 
-        Cursor cursor = db.query( Util.TABLE_FAVORITE, null, null, null, null, null, null);
+        String []args = { String.valueOf( id_event ) };
+
+        Cursor cursor = db.query( Util.TABLE_FAVORITE, null, "id_event=?", args, null, null, null);
 
         if ( cursor.moveToFirst() ) {
             do {
@@ -109,9 +111,7 @@ public class FavoriteController {
     public long deleteFavorite( Favorite favorite ) {
         db = dbHlpr.getWritableDatabase();
 
-        Favorite f = getFavorite( favorite );
-
-        String[] args = { String.valueOf( f.getId() )};
+        String[] args = { String.valueOf( favorite.getId() )};
 
         return db.delete( Util.TABLE_FAVORITE, "id=?", args );
     }
